@@ -1,7 +1,12 @@
 import { controls } from '../../constants/controls';
+import { createVersusBlock } from './fighterSelector';
 
 export async function fight(firstFighter, secondFighter) {
+  const selectedFighters = [firstFighter,secondFighter];
+
+  createVersusBlock(selectedFighters);
   return new Promise((resolve) => {
+
     // resolve the promise with the winner when fight is over
   });
 }
@@ -11,6 +16,7 @@ export function getDamage(attacker, defender) {
 }
 
 export function getHitPower(fighter) {
+
   // return hit power
 }
 

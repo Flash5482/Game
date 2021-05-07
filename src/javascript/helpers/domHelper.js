@@ -4,6 +4,7 @@ export function createElement({ tagName, className, attributes = {} }) {
   if (className) {
     const classNames = className.split(' ').filter(Boolean);
     element.classList.add(...classNames);
+    console.log(className);
   }
 
   Object.keys(attributes).forEach((key) => element.setAttribute(key, attributes[key]));

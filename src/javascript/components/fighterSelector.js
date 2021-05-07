@@ -29,13 +29,13 @@ function renderSelectedFighters(selectedFighters) {
   const firstPreview = createFighterPreview(playerOne, 'left');
   const secondPreview = createFighterPreview(playerTwo, 'right');
   const versusBlock = createVersusBlock(selectedFighters);
-
   fightersPreview.innerHTML = '';
   fightersPreview.append(firstPreview, versusBlock, secondPreview);
 }
 
-function createVersusBlock(selectedFighters) {
-  const canStartFight = selectedFighters.filter(Boolean).length === 2;
+export function createVersusBlock(selectedFighters) {
+  const canStartFight = selectedFighters.filter(Boolean).length === 0;
+
   const onClick = () => startFight(selectedFighters);
   const container = createElement({ tagName: 'div', className: 'preview-container___versus-block' });
   const image = createElement({
@@ -43,6 +43,7 @@ function createVersusBlock(selectedFighters) {
     className: 'preview-container___versus-img',
     attributes: { src: versusImg },
   });
+  console.log("canStartFight "+canStartFight);
   const disabledBtn = canStartFight ? '' : 'disabled';
   const fightBtn = createElement({
     tagName: 'button',

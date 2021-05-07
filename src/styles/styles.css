@@ -22,6 +22,7 @@ body {
   overflow: hidden;
 }
 
+
 img {
   max-width: 100%;
   max-height: 100%;
@@ -39,4 +40,7 @@ img {
   font-size: 18px;
   background: rgba(255, 255, 255, 0.7);
   visibility: hidden;
+}
+.fighter-preview___right>img{
+  transform: rotatey(180deg);
 }
