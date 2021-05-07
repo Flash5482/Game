@@ -17,23 +17,24 @@ class FighterService {
     }
   }
 
-/*  async  getFighterDetails(id) {
+
     // todo: implement this method
      //endpoint - `details/fighter/${id}.json`;
-    console.log(id);
-  }*/
 
-   async  getFighterInfo(event, fighter) {
+
+
+   async  getFighterInfo(fighter) {
     const { _id } = fighter;
     if (!fightersDetailsMap.has(_id)) {
       // send request here
       fightersDetailsMap.set(_id, fighter);
-      await createFighterPreview(fighter,'asdasd');
+
+     // await createFighterPreview(fighter,'asdasd');
     }else
     {
-      await createFighterPreview(fighter,'asdasd');
+     // await createFighterPreview(fighter,'asdasd');
     }
-    //console.log(fightersDetailsMap.get(_id));
+
   }
 
 

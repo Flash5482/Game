@@ -2,6 +2,8 @@ import { createElement } from '../helpers/domHelper';
 import { renderArena } from './arena';
 import versusImg from '../../../resources/versus.png';
 import { createFighterPreview } from './fighterPreview';
+import { fighterService } from '../services/fightersService';
+import { fightersDetails } from '../helpers/mockData';
 
 export function createFightersSelector() {
   let selectedFighters = [];
@@ -20,6 +22,11 @@ export function createFightersSelector() {
 const fighterDetailsMap = new Map();
 
 export async function getFighterInfo(fighterId) {
+ /* const { _id } = fighterId;
+  fighterDetailsMap.set(_id,fighterId);
+  fighterDetailsMap.forEach(item=>console.log("Its Name "+item.name));
+  */
+  return fightersDetails.find(x => x._id === fighterId);
   // get fighter info from fighterDetailsMap or from service and write it to fighterDetailsMap
 }
 
@@ -28,32 +35,31 @@ function renderSelectedFighters(selectedFighters) {
   const [playerOne, playerTwo] = selectedFighters;
   const firstPreview = createFighterPreview(playerOne, 'left');
   const secondPreview = createFighterPreview(playerTwo, 'right');
+
   const versusBlock = createVersusBlock(selectedFighters);
   fightersPreview.innerHTML = '';
   fightersPreview.append(firstPreview, versusBlock, secondPreview);
 }
 
 export function createVersusBlock(selectedFighters) {
-  const canStartFight = selectedFighters.filter(Boolean).length === 0;
 
+  const canStartFight = selectedFighters.filter(Boolean).length === 2;
   const onClick = () => startFight(selectedFighters);
+
   const container = createElement({ tagName: 'div', className: 'preview-container___versus-block' });
   const image = createElement({
     tagName: 'img',
     className: 'preview-container___versus-img',
     attributes: { src: versusImg },
   });
-  console.log("canStartFight "+canStartFight);
   const disabledBtn = canStartFight ? '' : 'disabled';
   const fightBtn = createElement({
     tagName: 'button',
     className: `preview-container___fight-btn ${disabledBtn}`,
   });
-
   fightBtn.addEventListener('click', onClick, false);
   fightBtn.innerText = 'Fight';
   container.append(image, fightBtn);
-
   return container;
 }
 

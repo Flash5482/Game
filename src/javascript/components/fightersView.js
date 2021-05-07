@@ -21,17 +21,15 @@ export function createFighters(fighters) {
 
 
 function createFighter(fighter, selectFighter) {
-  console.log(fighter);
+
   const fighterElement = createElement({ tagName: 'div', className: 'fighters___fighter' });
   const imageElement = createImage(fighter);
   const onClick = (event) => selectFighter(event, fighter._id);
   fighterElement.append(imageElement);
   fighterElement.addEventListener('click', onClick, false);
 
-/*
-console.log("!!!!!"+onClick);
-*/
-  fighterElement.addEventListener('click', (event) => fighterService.getFighterInfo(event, fighter), false);
+
+  fighterElement.addEventListener('click', () => fighterService.getFighterInfo(fighter), false);
 
   return fighterElement;
 }
