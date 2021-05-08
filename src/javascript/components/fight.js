@@ -1,14 +1,10 @@
-import { controls } from '../../constants/controls';
-import { createVersusBlock } from './fighterSelector';
-
 export async function fight(firstFighter, secondFighter) {
-
-
 
   return new Promise((resolve) => {
 
     // resolve the promise with the winner when fight is over
   });
+
 }
 
 export function getDamage(attacker, defender) {
@@ -16,10 +12,12 @@ export function getDamage(attacker, defender) {
 }
 
 export function getHitPower(fighter) {
-
-  // return hit power
+  let criticalHitChance = Math.floor(Math.random() * 2) + 1;
+  return fighter.attack * criticalHitChance;
 }
 
 export function getBlockPower(fighter) {
-  // return block power
+  let dodgeChance = Math.floor(Math.random() * 2) + 1;
+  console.log(dodgeChance);
+  return  fighter.defense * dodgeChance;
 }

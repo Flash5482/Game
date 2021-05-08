@@ -46,6 +46,7 @@ export function createVersusBlock(selectedFighters) {
   const canStartFight = selectedFighters.filter(Boolean).length === 2;
   const onClick = () => startFight(selectedFighters);
 
+
   const container = createElement({ tagName: 'div', className: 'preview-container___versus-block' });
   const image = createElement({
     tagName: 'img',
@@ -60,6 +61,8 @@ export function createVersusBlock(selectedFighters) {
   fightBtn.addEventListener('click', onClick, false);
   fightBtn.innerText = 'Fight';
   container.append(image, fightBtn);
+
+
   return container;
 }
 

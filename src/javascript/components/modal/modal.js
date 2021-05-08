@@ -1,5 +1,6 @@
 import { createElement } from '../../helpers/domHelper';
 
+
 export function showModal({ title, bodyElement, onClose = () => {} }) {
   const root = getModalContainer();
   const modal = createModal({ title, bodyElement, onClose }); 
@@ -40,7 +41,7 @@ function createHeader(title, onClose) {
   return headerElement;
 }
 
-function hideModal() {
+export function hideModal() {
   const modal = document.getElementsByClassName('modal-layer')[0];
   modal?.remove();
 }
