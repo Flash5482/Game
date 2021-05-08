@@ -11,6 +11,7 @@ class App {
 
   async startApp() {
     try {
+
       App.loadingElement.style.visibility = 'visible';
 
       const fighters = await fighterService.getFighters();

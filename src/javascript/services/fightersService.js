@@ -1,4 +1,9 @@
 import { callApi } from '../helpers/apiHelper';
+import { createFighterPreview } from '../components/fighterPreview';
+
+const fightersDetailsMap = new Map();
+
+
 
 class FighterService {
   async getFighters() {
@@ -12,10 +17,29 @@ class FighterService {
     }
   }
 
-  async getFighterDetails(id) {
+
     // todo: implement this method
-    // endpoint - `details/fighter/${id}.json`;
+     //endpoint - `details/fighter/${id}.json`;
+
+
+
+   async  getFighterInfo(fighter) {
+    const { _id } = fighter;
+    if (!fightersDetailsMap.has(_id)) {
+      // send request here
+      fightersDetailsMap.set(_id, fighter);
+
+     // await createFighterPreview(fighter,'asdasd');
+    }else
+    {
+     // await createFighterPreview(fighter,'asdasd');
+    }
+
   }
+
+
 }
 
+
 export const fighterService = new FighterService();
+
