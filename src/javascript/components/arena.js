@@ -1,6 +1,7 @@
 import { createElement } from '../helpers/domHelper';
 import { createFighterImage } from './fighterPreview';
 import { getBlockPower, getHitPower } from './fight';
+import { showWinnerModal } from './modal/winner';
 
 var healthRightFighterPercent, healthLeftFighterPercent;
 var isLeftFighterHasBlock = false;
@@ -40,7 +41,7 @@ function criticalOnLeftHero(selectedFighters) {
   }
   document.getElementById('left-fighter-indicator').style.width = hp + '%';
   isLeftCriticalAttackEnabled = false;
-  setTimeout(() =>isLeftCriticalAttackEnabled = true , 10000);
+  setTimeout(() => isLeftCriticalAttackEnabled = true, 10000);
 }
 
 function criticalOnRightHero(selectedFighters) {
@@ -53,10 +54,11 @@ function criticalOnRightHero(selectedFighters) {
   selectedFighters[1].health -= selectedFighters[0].attack * 2;
   let hp = selectedFighters[1].health * healthRightFighterPercent;
   if (selectedFighters[1].health <= 0) {
+
   }
   console.log('Health  ' + selectedFighters[1].health + ' hp = ' + hp);
   isRightCriticalAttackEnabled = false;
-  setTimeout(() =>isRightCriticalAttackEnabled = true , 10000);
+  setTimeout(() => isRightCriticalAttackEnabled = true, 10000);
   document.getElementById('right-fighter-indicator').style.width = hp + '%';
 }
 
@@ -82,6 +84,8 @@ export function renderArena(selectedFighters) {
   root.append(arena);
 
   // todo:
+
+ // fight(selectedFighters[0],selectedFighters[1]);
   // - start the fight
   runOnKeys(
     () => criticalOnRightHero(selectedFighters),
@@ -107,6 +111,7 @@ export function renderArena(selectedFighters) {
   });
 
   document.addEventListener('keyup', function(event) {
+
     if (event.key === 'd') {
       isLeftFighterHasBlock = false;
     }
@@ -114,28 +119,24 @@ export function renderArena(selectedFighters) {
       isRightFighterHasBlock = false;
     }
     if (event.key === 'a') {
-      
+
       if (healthRightFighterPercent === undefined) {
         healthRightFighterPercent = 100 / selectedFighters[1].health;
       }
 
-      if (selectedFighters[1].health <= 0) {
-        // showModal('Left Win', 'Left win', hideModal());
 
-      }
       selectedFighters[1].health -= blockFighter(isRightFighterHasBlock, selectedFighters[1], selectedFighters[0]);
       let hp = selectedFighters[1].health * healthRightFighterPercent;
 
       console.log('Eazy Health  ' + selectedFighters[1].health + 'Eazy hp = ' + hp);
       document.getElementById('right-fighter-indicator').style.width = hp + '%';
+      if (selectedFighters[1].health <= 0) {
+        showWinnerModal(selectedFighters[0]);
+        // showModal('Left Win', 'Left win', hideModal());
+      }
     }
 
     if (event.key === 'j') {
-
-      if (selectedFighters[0].health <= 0) {
-        //showModal('Left Win', 'Left win', hideModal());
-
-      }
       if (healthLeftFighterPercent === undefined) {
         healthLeftFighterPercent = 100 / selectedFighters[0].health;
       }
@@ -144,9 +145,13 @@ export function renderArena(selectedFighters) {
       // console.log('getHitPower ' + getHitPower(selectedFighters[1]) + '  getBlockPower  ' + getBlockPower(selectedFighters[0]));
 
       let hp = selectedFighters[0].health * healthLeftFighterPercent;
-      console.log(hp);
       document.getElementById('left-fighter-indicator').style.width = hp + '%';
-      console.log('Good j');
+
+      if (selectedFighters[0].health <= 0) {
+        showWinnerModal(selectedFighters[1]);
+
+      }
+
     }
 
   });

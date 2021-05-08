@@ -34,6 +34,7 @@ function createHeader(title, onClose) {
   const close = () => {
     hideModal();
     onClose();
+    document.location.reload();
   }
   closeButton.addEventListener('click', close);
   headerElement.append(titleElement, closeButton);
