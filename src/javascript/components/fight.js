@@ -1,4 +1,5 @@
 import { showWinnerModal } from './modal/winner';
+import { controls } from '../../constants/controls';
 
 var healthRightFighterPercent, healthLeftFighterPercent;
 var isLeftFighterHasBlock = false;
@@ -7,15 +8,18 @@ var isLeftCriticalAttackEnabled = true;
 var isRightCriticalAttackEnabled = true;
 
 
-function runOnKeys(func, ...codes) {
+function runOnKeys(func, codes) {
+
   let pressed = new Set();
   document.addEventListener('keydown', function(event) {
+    console.log("Codes "+codes);
     pressed.add(event.code);
     for (let code of codes) { // все ли клавиши из набора нажаты?
       if (!pressed.has(code)) {
         return;
       }
     }
+
     pressed.clear();
     func();
   });
@@ -78,36 +82,38 @@ export async function fight(firstFighter, secondFighter) {
   const selectedFighters = [firstFighter, secondFighter];
   runOnKeys(
     () => criticalOnRightHero(selectedFighters),
-    'KeyQ',
+    /*'KeyQ',
     'KeyW',
-    'KeyE'
+    'KeyE'*/
+    controls.PlayerOneCriticalHitCombination
   );
   runOnKeys(
     () => criticalOnLeftHero(selectedFighters),
-    'KeyU',
+    /*'KeyU',
     'KeyI',
-    'KeyO'
+    'KeyO'*/
+    controls.PlayerTwoCriticalHitCombination
   );
 
 
   document.addEventListener('keydown', function(event) {
-    if (event.key === 'd') {
+    if (event.code === controls.PlayerOneBlock ) {
       isLeftFighterHasBlock = true;
     }
-    if (event.key === 'l') {
+    if (event.code === controls.PlayerTwoBlock) {
       isRightFighterHasBlock = true;
     }
   });
 
   document.addEventListener('keyup', function(event) {
 
-    if (event.key === 'd') {
+    if (event.code ===controls.PlayerOneBlock) {
       isLeftFighterHasBlock = false;
     }
-    if (event.key === 'l') {
+    if (event.code === controls.PlayerTwoBlock) {
       isRightFighterHasBlock = false;
     }
-    if (event.key === 'a') {
+    if (event.code === controls.PlayerOneAttack) {
       if(isLeftFighterHasBlock){
         return;
       }
@@ -128,7 +134,7 @@ export async function fight(firstFighter, secondFighter) {
       }
     }
 
-    if (event.key === 'j') {
+    if (event.code === controls.PlayerTwoAttack) {
       if(isRightFighterHasBlock){
         return;
       }
