@@ -38,7 +38,7 @@ function createFighterInfo(fighter) {
   const indicator = createElement({ tagName: 'div', className: 'preview-fighter-indicator' });
 
   const fighterSkills = fightersDetails.find(x => x._id === fighter._id);
-  indicator.innerText = 'hp/ ' + fighterSkills.health + `\n attack/ ` + fighterSkills.attack;
+  indicator.innerText = 'hp/ ' + fighterSkills.health + `\n attack/ ` + fighterSkills.attack + `\n defense/ ` + fighterSkills.defense;
 
   container.append(fighterName, indicator);
   return container;

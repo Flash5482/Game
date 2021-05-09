@@ -22,11 +22,8 @@ export function createFightersSelector() {
 const fighterDetailsMap = new Map();
 
 export async function getFighterInfo(fighterId) {
- /* const { _id } = fighterId;
-  fighterDetailsMap.set(_id,fighterId);
-  fighterDetailsMap.forEach(item=>console.log("Its Name "+item.name));
-  */
-  return fightersDetails.find(x => x._id === fighterId);
+   //await fighterService.getFighterDetails(fighterId);
+  return  await fighterService.getFighterDetails(fighterId);
   // get fighter info from fighterDetailsMap or from service and write it to fighterDetailsMap
 }
 
