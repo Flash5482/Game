@@ -108,7 +108,9 @@ export async function fight(firstFighter, secondFighter) {
       isRightFighterHasBlock = false;
     }
     if (event.key === 'a') {
-
+      if(isLeftFighterHasBlock){
+        return;
+      }
       if (healthRightFighterPercent === undefined) {
         healthRightFighterPercent = 100 / selectedFighters[1].health;
       }
@@ -119,6 +121,7 @@ export async function fight(firstFighter, secondFighter) {
 
       console.log('Eazy Health  ' + selectedFighters[1].health + 'Eazy hp = ' + hp);
       document.getElementById('right-fighter-indicator').style.width = hp + '%';
+
       if (selectedFighters[1].health <= 0) {
         showWinnerModal(selectedFighters[0]);
         // showModal('Left Win', 'Left win', hideModal());
@@ -126,6 +129,9 @@ export async function fight(firstFighter, secondFighter) {
     }
 
     if (event.key === 'j') {
+      if(isRightFighterHasBlock){
+        return;
+      }
       if (healthLeftFighterPercent === undefined) {
         healthLeftFighterPercent = 100 / selectedFighters[0].health;
       }
