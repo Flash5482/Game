@@ -12,7 +12,7 @@ function runOnKeys(func, codes) {
 
   let pressed = new Set();
   document.addEventListener('keydown', function(event) {
-    console.log("Codes "+codes);
+    console.log('Codes ' + codes);
     pressed.add(event.code);
     for (let code of codes) { // все ли клавиши из набора нажаты?
       if (!pressed.has(code)) {
@@ -67,14 +67,11 @@ function blockFighter(isBlock, firstFighter, secondFighter) {
   let getBlockPowers = getBlockPower(firstFighter);
   let getHitPowers = getHitPower(secondFighter);
   if (isBlock) {
-    if (getBlockPowers > getHitPowers) {
-      return 0;
-    } else {
-      return getHitPowers - getBlockPowers;
-    }
+    return 0;
   } else {
-    return getHitPowers;
+    return getDamage(firstFighter, secondFighter);
   }
+
 }
 
 
@@ -82,22 +79,16 @@ export async function fight(firstFighter, secondFighter) {
   const selectedFighters = [firstFighter, secondFighter];
   runOnKeys(
     () => criticalOnRightHero(selectedFighters),
-    /*'KeyQ',
-    'KeyW',
-    'KeyE'*/
     controls.PlayerOneCriticalHitCombination
   );
   runOnKeys(
     () => criticalOnLeftHero(selectedFighters),
-    /*'KeyU',
-    'KeyI',
-    'KeyO'*/
     controls.PlayerTwoCriticalHitCombination
   );
 
 
   document.addEventListener('keydown', function(event) {
-    if (event.code === controls.PlayerOneBlock ) {
+    if (event.code === controls.PlayerOneBlock) {
       isLeftFighterHasBlock = true;
     }
     if (event.code === controls.PlayerTwoBlock) {
@@ -107,14 +98,16 @@ export async function fight(firstFighter, secondFighter) {
 
   document.addEventListener('keyup', function(event) {
 
-    if (event.code ===controls.PlayerOneBlock) {
+    if (event.code === controls.PlayerOneBlock) {
       isLeftFighterHasBlock = false;
+      return;
     }
     if (event.code === controls.PlayerTwoBlock) {
       isRightFighterHasBlock = false;
+      return;
     }
     if (event.code === controls.PlayerOneAttack) {
-      if(isLeftFighterHasBlock){
+      if (isLeftFighterHasBlock) {
         return;
       }
       if (healthRightFighterPercent === undefined) {
@@ -125,17 +118,18 @@ export async function fight(firstFighter, secondFighter) {
       selectedFighters[1].health -= blockFighter(isRightFighterHasBlock, selectedFighters[1], selectedFighters[0]);
       let hp = selectedFighters[1].health * healthRightFighterPercent;
 
-      console.log('Eazy Health  ' + selectedFighters[1].health + 'Eazy hp = ' + hp);
+      //console.log('Eazy Health  ' + selectedFighters[1].health + 'Eazy hp = ' + hp);
       document.getElementById('right-fighter-indicator').style.width = hp + '%';
 
       if (selectedFighters[1].health <= 0) {
         showWinnerModal(selectedFighters[0]);
         // showModal('Left Win', 'Left win', hideModal());
       }
+      return;
     }
 
     if (event.code === controls.PlayerTwoAttack) {
-      if(isRightFighterHasBlock){
+      if (isRightFighterHasBlock) {
         return;
       }
       if (healthLeftFighterPercent === undefined) {
@@ -181,11 +175,12 @@ export function getDamage(attacker, defender) {
 }
 
 export function getHitPower(fighter) {
-  let criticalHitChance = Math.floor(Math.random() * 2) + 1;
-  return fighter.attack *criticalHitChance;
+  let criticalHitChance = Math.random() + 1;
+  console.log('criticalHitChance ' + criticalHitChance);
+  return fighter.attack * criticalHitChance;
 }
 
 export function getBlockPower(fighter) {
-  let dodgeChance = Math.floor(Math.random() * 2) + 1;
+  let dodgeChance = Math.random() + 1;
   return fighter.defense * dodgeChance;
 }

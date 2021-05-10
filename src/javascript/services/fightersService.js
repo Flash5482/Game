@@ -21,7 +21,7 @@ class FighterService {
     try {
       return await callApi(endpoint);
     } catch (error) {
-      console.log("Error");
+      throw error;
     }
 
   }
